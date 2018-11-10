@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 final _navigationItems = <BottomNavigationBarItem>[
   BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Pull requests')),
-  BottomNavigationBarItem(icon: Icon(Icons.business), title: Text('Issues')),
+  BottomNavigationBarItem(icon: Icon(Icons.question_answer), title: Text('Issues')),
 ];
 
 final _navigationWidgets = [
@@ -22,7 +22,7 @@ class _HomePageState extends State<HomePage> {
       bottomNavigationBar: BottomNavigationBar(
         items: _navigationItems,
         currentIndex: _selectedIndex,
-        fixedColor: Colors.blue[700],
+        fixedColor: Colors.blue,
         onTap: _onItemTapped,
       ),
     );
