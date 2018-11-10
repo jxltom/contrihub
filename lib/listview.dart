@@ -12,11 +12,11 @@ class CustomListView extends StatelessWidget {
           return new Divider();
         }
 
-        if (index > fake_data.length - 1) {
-          index = index % fake_data.length;
+        if (index > fakeData.length - 1) {
+          index = index % fakeData.length;
         }
 
-        var data = fake_data.elementAt(index);
+        var data = fakeData.elementAt(index);
 
         return ListTile(
           leading: Icon(Icons.merge_type),

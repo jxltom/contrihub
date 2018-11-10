@@ -6,7 +6,7 @@ class GithubData {
   GithubData({this.project = '', this.title = '', this.description = ''});
 }
 
-final fake_data = [
+final fakeData = [
   GithubData(
       project: 'flutter/flutter',
       title: 'Do not ignore pubspec.lock in project templates',
