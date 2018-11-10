@@ -1,9 +1,16 @@
 import 'package:flutter/material.dart';
+import 'package:contrihub/listview.dart';
 
 final _pullRequestTypes = [
   Text('Created'),
   Text('Assigned'),
   Text('Mentioned')
+];
+
+final _pullRequestItems = [
+  CustomListView(),
+  CustomListView(),
+  CustomListView()
 ];
 
 class PullRequest extends StatelessWidget {
@@ -24,11 +31,7 @@ class PullRequest extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: _pullRequestTypes.map((Text pullRequestType) {
-            return Center(
-              child: pullRequestType,
-            );
-          }).toList(),
+          children: _pullRequestItems,
         ),
       ),
     );
