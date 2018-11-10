@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:contrihub/pull_request.dart';
 
 final _navigationItems = <BottomNavigationBarItem>[
   BottomNavigationBarItem(icon: Icon(Icons.home), title: Text('Pull requests')),
@@ -6,7 +7,7 @@ final _navigationItems = <BottomNavigationBarItem>[
 ];
 
 final _navigationWidgets = [
-  Text('This should be the Pull Requests'),
+  PullRequest(),
   Text('This should be the Issues'),
 ];
 
