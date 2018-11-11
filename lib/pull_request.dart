@@ -3,15 +3,17 @@ import 'package:flutter/material.dart';
 import 'package:contrihub/listview.dart';
 
 final _pullRequestTypes = [
+  Text('Timeline'),
   Text('Created'),
   Text('Assigned'),
   Text('Mentioned')
 ];
 
 final _pullRequestItems = [
-  CustomListView(),
-  CustomListView(),
-  CustomListView()
+  TimelineListView(),
+  CreatedListView(),
+  AssignedListView(),
+  MentionedListView()
 ];
 
 class PullRequest extends StatelessWidget {

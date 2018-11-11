@@ -25,47 +25,50 @@ final _readPullRequestsGraphql = """
 """
     .replaceAll('\n', ' ');
 
-final _queryPullRequests = Query(
-  _readPullRequestsGraphql,
-  variables: {
-    'username': 'jxltom',
-  },
-  pollInterval: 10,
-  builder: ({
-    bool loading,
-    var data,
-    Exception error,
-  }) {
-    if (error != null) {
-      return Center(
-        child: Text(error.toString()),
-      );
-    }
+Query _getPullRequestsQuery(String type) {
+  return Query(
+    _readPullRequestsGraphql,
+    variables: {
+      'username': type,
+    },
+    pollInterval: 10,
+    builder: ({
+      bool loading,
+      var data,
+      Exception error,
+    }) {
+      if (error != null) {
+        return Center(
+          child: Text(error.toString()),
+        );
+      }
 
-    if (loading) {
-      return Center(
-        child: Text('Loading'),
-      );
-    }
+      if (loading) {
+        return Center(
+          child: Text('Loading'),
+        );
+      }
 
-    List pullRequests = data['user']['pullRequests']['nodes'];
+      List pullRequests = data['user']['pullRequests']['nodes'];
 
-    return ListView.builder(
-        padding: EdgeInsets.all(16.0),
-        itemCount: pullRequests.length,
-        itemBuilder: (context, index) {
-          final pullRequest = pullRequests[index];
+      return ListView.builder(
+          padding: EdgeInsets.all(16.0),
+          itemCount: pullRequests.length,
+          itemBuilder: (context, index) {
+            final pullRequest = pullRequests[index];
 
-          return ListTile(
-            leading: Icon(Icons.merge_type, color: _getStateColor(pullRequest['state'])),
-            title: Text(pullRequest['title']),
-            subtitle: Text(pullRequest['repository']['nameWithOwner']),
-            trailing: Icon(Icons.comment),
-            contentPadding: EdgeInsets.symmetric(horizontal: 4.0),
-          );
-        });
-  },
-);
+            return ListTile(
+              leading: Icon(Icons.merge_type,
+                  color: _getStateColor(pullRequest['state'])),
+              title: Text(pullRequest['title']),
+              subtitle: Text(pullRequest['repository']['nameWithOwner']),
+              trailing: Icon(Icons.comment),
+              contentPadding: EdgeInsets.symmetric(horizontal: 4.0),
+            );
+          });
+    },
+  );
+}
 
 Color _getStateColor(String state) {
   var color = Colors.yellow;
@@ -81,9 +84,29 @@ Color _getStateColor(String state) {
   return color;
 }
 
-class CustomListView extends StatelessWidget {
+class TimelineListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return _queryPullRequests;
+    return _getPullRequestsQuery('jxltom');
+  }
+}
+class CreatedListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _getPullRequestsQuery('jxltom');
+  }
+}
+
+class AssignedListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _getPullRequestsQuery('ry');
+  }
+}
+
+class MentionedListView extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return _getPullRequestsQuery('kennethreitz');
   }
 }
