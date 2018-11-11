@@ -3,14 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:contrihub/listview.dart';
 
 final _pullRequestTypes = [
-  Text('Timeline'),
   Text('Created'),
   Text('Assigned'),
   Text('Mentioned')
 ];
 
 final _pullRequestItems = [
-  TimelineListView(),
   CreatedListView(),
   AssignedListView(),
   MentionedListView()

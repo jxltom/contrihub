@@ -8,7 +8,7 @@ final _readPullRequestsGraphql = """
         first: 50,
         states: [CLOSED, MERGED, OPEN],
         orderBy: {
-          field: CREATED_AT,
+          field: UPDATED_AT,
           direction: DESC
         }
       ) {
@@ -45,7 +45,9 @@ Query _getPullRequestsQuery(String type) {
 
       if (loading) {
         return Center(
-          child: Text('Loading'),
+          child: CircularProgressIndicator(
+            strokeWidth: 2.0,
+          ),
         );
       }
 
@@ -84,12 +86,6 @@ Color _getStateColor(String state) {
   return color;
 }
 
-class TimelineListView extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return _getPullRequestsQuery('jxltom');
-  }
-}
 class CreatedListView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
