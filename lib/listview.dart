@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:graphql_flutter/graphql_flutter.dart';
 
-import 'package:contrihub/fake_data.dart';
-
 final _readPullRequestsGraphql = """
   query (\$username: String!) {
     user(login: \$username) {
