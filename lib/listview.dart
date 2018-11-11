@@ -4,8 +4,6 @@ import 'package:graphql_flutter/graphql_flutter.dart';
 final _readPullRequestsGraphql = """
   query (\$username: String!) {
     user(login: \$username) {
-      name,
-      bio,
       pullRequests(
         first: 50,
         states: [CLOSED, MERGED, OPEN],
@@ -18,7 +16,7 @@ final _readPullRequestsGraphql = """
           state,
           title,
           repository {
-            name
+            nameWithOwner
           },
         }
       }
@@ -59,14 +57,29 @@ final _queryPullRequests = Query(
           final pullRequest = pullRequests[index];
 
           return ListTile(
-            leading: Icon(Icons.merge_type),
+            leading: Icon(Icons.merge_type, color: _getStateColor(pullRequest['state'])),
             title: Text(pullRequest['title']),
-            subtitle: Text(pullRequest['title']),
+            subtitle: Text(pullRequest['repository']['nameWithOwner']),
             trailing: Icon(Icons.comment),
+            contentPadding: EdgeInsets.symmetric(horizontal: 4.0),
           );
         });
   },
 );
+
+Color _getStateColor(String state) {
+  var color = Colors.yellow;
+
+  if (state == 'OPEN') {
+    color = Colors.green;
+  } else if (state == 'CLOSED') {
+    color = Colors.red;
+  } else if (state == 'MERGED') {
+    color = Colors.purple;
+  }
+
+  return color;
+}
 
 class CustomListView extends StatelessWidget {
   @override
