@@ -2,7 +2,7 @@
 
 **App in Android and iOS for viewing your Timeline, Pull Requests, Issues and more!**
 
-## :star: Features
+## Features
 
 - Timeline
 
