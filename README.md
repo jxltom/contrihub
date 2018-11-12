@@ -1,6 +1,6 @@
 # Contrihub for Github in Android and iOS
 
-App in Android and iOS for viewing your Timeline, Pull Requests, Issues and more! :yum::sparkles::beers:
+**App in Android and iOS for viewing your Timeline, Pull Requests, Issues and more!** :yum::sparkles::beers:
 
 ## :star: Features
 
