@@ -1,6 +1,6 @@
 # Contrihub for Github in Android and iOS
 
-An APP in Android and iOS for viewing your Timeline, Pull Requests, Issues and more! :tada::tada::tada:
+APP in Android and iOS for viewing your Timeline, Pull Requests, Issues and more! :yum::yum::yum:
 
 ## Features
 
@@ -19,3 +19,7 @@ An APP in Android and iOS for viewing your Timeline, Pull Requests, Issues and m
     - Check the status of your created Issues
     - Check the status of the Issues assigned to you
     - Check the status of the Issues which mentioned you
+
+## :sparkling_heart: Buy Me a Coffee
+
+Buy me a coffee if you like this project. :heart:
