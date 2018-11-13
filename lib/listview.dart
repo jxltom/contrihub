@@ -103,36 +103,50 @@ class _CreatedListViewState extends State<CreatedListView> {
     );
   }
 
+  Future<void> _onRefresh() {
+    return client.query(
+      query: _readPullRequestsGraphql,
+      variables: {
+        'username': 'jxltom',
+        'index': 1,
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
-    return ListView.builder(
-      itemBuilder: (context, index) {
-        return FutureBuilder(
-          future: _getQuery(index),
-          builder: (BuildContext context,
-              AsyncSnapshot<Map<String, dynamic>> snapshot) {
-            if (!snapshot.hasData) {
-              return Center(
-                child: CircularProgressIndicator(
-                  strokeWidth: 2.0,
-                ),
-              );
-            } else {
-              final pullRequest =
-                  snapshot.data['user']['pullRequests']['nodes'].last;
+    return RefreshIndicator(
+      onRefresh: _onRefresh,
+      child: FutureBuilder(
+        future: _getQuery(30),
+        builder: (BuildContext context,
+            AsyncSnapshot<Map<String, dynamic>> snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+              child: CircularProgressIndicator(
+                strokeWidth: 2.0,
+              ),
+            );
+          } else {
+            final pullRequests = snapshot.data['user']['pullRequests']['nodes'];
 
-              return ListTile(
-                leading: Icon(Icons.merge_type,
-                    color: _getStateColor(pullRequest['state'])),
-                title: Text(pullRequest['title']),
-                subtitle: Text(pullRequest['repository']['nameWithOwner']),
-                trailing: Icon(Icons.comment),
-                contentPadding: EdgeInsets.symmetric(horizontal: 4.0),
-              );
-            }
-          },
-        );
-      },
+            return ListView.builder(
+              padding: EdgeInsets.all(16.0),
+              itemBuilder: (context, index) {
+                final pullRequest = pullRequests[index];
+                return ListTile(
+                  leading: Icon(Icons.merge_type,
+                      color: _getStateColor(pullRequest['state'])),
+                  title: Text(pullRequest['title']),
+                  subtitle: Text(pullRequest['repository']['nameWithOwner']),
+                  trailing: Icon(Icons.comment),
+                  contentPadding: EdgeInsets.symmetric(horizontal: 4.0),
+                );
+              },
+            );
+          }
+        },
+      ),
     );
   }
 }
