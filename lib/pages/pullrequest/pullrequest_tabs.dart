@@ -31,6 +31,7 @@ class _CreatedPullrequestTabState extends State<CreatedPullrequestTab> {
     return RefreshIndicator(
       onRefresh: _updatePullRequestItems,
       child: ListView.builder(
+        physics: const AlwaysScrollableScrollPhysics(),
         padding: EdgeInsets.all(16.0),
         itemCount: _pullRequestItems.length * 2 + 1,
         itemBuilder: (context, index) {
