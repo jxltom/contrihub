@@ -7,14 +7,16 @@ import 'package:contrihub/graphql/client.dart';
 import 'package:contrihub/graphql/queries.dart';
 import 'package:contrihub/pages/pullrequest/pullrequest_element.dart';
 
-final _itemsOnce = 3;
+final _itemsOnce = 10;
 
 class _CreatedPullrequestTabState extends State<CreatedPullrequestTab> {
   int _currentItemsIndex = 0;
+  bool _loading = false;
   List<dynamic> _pullRequestItems = List<dynamic>();
   Future<void> _updatePullRequestItemsFuture;
   ScrollController _scrollController = ScrollController();
 
+  // FIXME: Query only a pagination
   Future<List<dynamic>> _query(int index) async {
     final _data = await graphqlClient.query(
       query: readPullRequestsQuery,
@@ -27,9 +29,12 @@ class _CreatedPullrequestTabState extends State<CreatedPullrequestTab> {
     return _data['user']['pullRequests']['nodes'];
   }
 
+  // FIXME: Scroll is triggered when pulling
   Future<void> _resetPullRequestItems() async {
-    _currentItemsIndex = _itemsOnce;
-  
+    setState(() {
+      _currentItemsIndex = _itemsOnce;
+    });
+    
     final _data = await _query(_currentItemsIndex);
 
     setState(() {
@@ -38,20 +43,26 @@ class _CreatedPullrequestTabState extends State<CreatedPullrequestTab> {
   }
 
   Future<void> _updatePullRequestItems() async {
-    print('called');
-    _currentItemsIndex += _itemsOnce;
-  
+    setState(() {
+      _loading = true;
+      _currentItemsIndex += _itemsOnce;
+    });
+
     final _data = await _query(_currentItemsIndex);
 
     setState(() {
+      _loading = false;
       _pullRequestItems = _data;
     });
   }
 
   // FIXME: Disable loading multiple times
   bool _onNotification(Notification notification) {
+    // FIXME: Better check conditions?
     if (notification is OverscrollNotification) {
-      _updatePullRequestItems();
+      if (!_loading) {
+        _updatePullRequestItems();
+      }
     }
 
     return true;
