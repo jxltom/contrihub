@@ -10,6 +10,7 @@ import 'package:contrihub/pages/pullrequest/pullrequest_element.dart';
 final _itemsOnce = 3;
 
 class _CreatedPullrequestTabState extends State<CreatedPullrequestTab> {
+  Future<void> _updatePullRequestItemsFuture;
   List<dynamic> _pullRequestItems = List<dynamic>();
 
   Future<void> _updatePullRequestItems() async {
@@ -27,26 +28,47 @@ class _CreatedPullrequestTabState extends State<CreatedPullrequestTab> {
   }
 
   @override
+  void initState() {
+    super.initState();
+
+    // This is required otherwise FutureBuilder will trigger build infinitely
+    // since there is a setState in this Future
+    _updatePullRequestItemsFuture = _updatePullRequestItems();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return RefreshIndicator(
-      onRefresh: _updatePullRequestItems,
-      child: ListView.builder(
-        physics: const AlwaysScrollableScrollPhysics(),
-        padding: EdgeInsets.all(16.0),
-        itemCount: _pullRequestItems.length * 2 + 1,
-        itemBuilder: (context, index) {
-          if (index + 1 == _pullRequestItems.length * 2 + 1) {
-            return LoadingIndicator();
-          }
+    return FutureBuilder(
+      future: _updatePullRequestItemsFuture,
+      builder: (BuildContext context, AsyncSnapshot snapshot) {
+        // snapshot.hasData doesn't work since the Future returns void
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return LoadingIndicator();
+        }
 
-          if (index % 2 == 1) {
-            return Divider();
-          }
+        return RefreshIndicator(
+          onRefresh: _updatePullRequestItems,
+          child: ListView.builder(
+            physics: const AlwaysScrollableScrollPhysics(),
+            padding: EdgeInsets.all(16.0),
+            itemCount: _pullRequestItems.length * 2 + 1,
+            itemBuilder: (context, index) {
+              if (index + 1 == _pullRequestItems.length * 2 + 1) {
+                return LoadingIndicator();
+              }
 
-          final pullRequest = _pullRequestItems[index ~/ 2];
-          return PullrequestElement(pullrequest: pullRequest,);
-        },
-      ),
+              if (index % 2 == 1) {
+                return Divider();
+              }
+
+              final pullRequest = _pullRequestItems[index ~/ 2];
+              return PullrequestElement(
+                pullrequest: pullRequest,
+              );
+            },
+          ),
+        );
+      },
     );
   }
 }
