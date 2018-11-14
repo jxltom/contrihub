@@ -1,30 +1,30 @@
 import 'package:flutter/material.dart';
 
-import 'package:contrihub/listview.dart';
+import 'package:contrihub/pages/pullrequest/pullrequest_tabs.dart';
 
-final _pullRequestTypes = [
+final _pullrequestTypes = [
   Text('Created'),
   Text('Assigned'),
   Text('Mentioned')
 ];
 
-final _pullRequestItems = [
-  CreatedListView(),
-  AssignedListView(),
-  MentionedListView()
+final _pullrequestTabs = [
+  CreatedPullrequestTab(),
+  AssignedPullrequestTab(),
+  MentionedPullrequestTab()
 ];
 
-class PullRequest extends StatelessWidget {
+class PullrequestPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: _pullRequestTypes.length,
+      length: _pullrequestTypes.length,
       child: Scaffold(
         appBar: AppBar(
           leading: Icon(Icons.search),
           bottom: TabBar(
             indicatorColor: Colors.black,
-            tabs: _pullRequestTypes.map((Text pullRequestType) {
+            tabs: _pullrequestTypes.map((Text pullRequestType) {
               return Tab(
                 text: pullRequestType.data,
               );
@@ -32,7 +32,7 @@ class PullRequest extends StatelessWidget {
           ),
         ),
         body: TabBarView(
-          children: _pullRequestItems,
+          children: _pullrequestTabs,
         ),
       ),
     );
