@@ -1,6 +1,6 @@
 # Contrihub for Github in Android and iOS
 
-An App in **Android** and **iOS**, powered by **Flutter** and **GraphQL**, for viewing your **GitHub Timeline, Pull Requests, Issues and more**!
+App in **Android** and **iOS**, powered by **Flutter** and **GraphQL**, for viewing your **GitHub Timeline, Pull Requests, Issues and more**!
 
 ## Features
 
